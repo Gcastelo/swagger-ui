@@ -3,7 +3,7 @@ class HeaderView extends Backbone.View
     'click #show-pet-store-icon'    : 'showPetStore'
     'click #show-wordnik-dev-icon'  : 'showWordnikDev'
     'click #explore'                : 'showCustom'
-    'keyup #input_baseUrl'          : 'showCustomOnKeyup'
+    'keyup input.editable-select'   : 'showCustomOnKeyup'
     'keyup #input_apiKey'           : 'showCustomOnKeyup'
   }
 
@@ -28,10 +28,10 @@ class HeaderView extends Backbone.View
     e?.preventDefault()
     @trigger(
       'update-swagger-ui'
-      {url: $('#input_baseUrl').val(), apiKey: $('#input_apiKey').val()}
+      {url: $('input.editable-select').val(), apiKey: $('#input_apiKey').val()}
     )
 
   update: (url, apiKey, trigger = false) ->
-    $('#input_baseUrl').val url
+    $('input.editable-select').val url
     #$('#input_apiKey').val apiKey
     @trigger 'update-swagger-ui', {url:url} if trigger
