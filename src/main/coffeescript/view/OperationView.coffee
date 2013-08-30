@@ -1,4 +1,4 @@
-class OperationView extends Backbone.View
+﻿class OperationView extends Backbone.View
   events: {
   'submit .sandbox'         : 'submitOperation'
   'click .submit'           : 'submitOperation'
@@ -14,12 +14,17 @@ class OperationView extends Backbone.View
 
     $(@el).html(Handlebars.templates.operation(@model))
 
+    isArray = false
+    if @model.type and /array/.test(@model.type)
+        isArray = true
+        @model.responseClassSignature = @model.responseClassSignature.replace("array[","").replace("]","")
+
     if @model.responseClassSignature and @model.responseClassSignature != 'string'
       signatureModel =
         sampleJSON: @model.responseSampleJSON
         isParam: false
         signature: @model.responseClassSignature
-        isArray : /array/.test(@model.type)
+        isArray : isArray
 		
       responseSignatureView = new SignatureView({model: signatureModel, tagName: 'div'})
       $('.model-signature', $(@el)).append responseSignatureView.render().el
