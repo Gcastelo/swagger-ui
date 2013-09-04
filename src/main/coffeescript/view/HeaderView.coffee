@@ -6,7 +6,7 @@ class HeaderView extends Backbone.View
   }
 
   initialize: ->
-
+ 
 
   showCustomOnKeyup: (e) ->
     @showCustom() if e.keyCode is 13

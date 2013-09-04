@@ -14,9 +14,7 @@
 
     $(@el).html(Handlebars.templates.operation(@model))
 
-    isArray = false
     if @model.type and /array/.test(@model.type)
-        isArray = true
         @model.responseClassSignature = @model.responseClassSignature.replace("array[","").replace("]","")
 
     if @model.responseClassSignature and @model.responseClassSignature != 'string'
@@ -24,7 +22,6 @@
         sampleJSON: @model.responseSampleJSON
         isParam: false
         signature: @model.responseClassSignature
-        isArray : isArray
 		
       responseSignatureView = new SignatureView({model: signatureModel, tagName: 'div'})
       $('.model-signature', $(@el)).append responseSignatureView.render().el
@@ -89,7 +86,7 @@
 
       for o in form.find("input")
         if(o.value? && jQuery.trim(o.value).length > 0)
-          map[o.name] = encodeURI(o.value)
+          map[o.name] = o.value
 
       for o in form.find("textarea")
         if(o.value? && jQuery.trim(o.value).length > 0)
@@ -101,7 +98,7 @@
 
       opts.responseContentType = $("div select[name=responseContentType]", $(@el)).val()
       opts.requestContentType = $("div select[name=parameterContentType]", $(@el)).val()
-
+      $(".response_throbber", $(this.el)).show();
       @model.do(map, opts, @showCompleteStatus, @showErrorStatus, @)
 
   success: (response, parent) ->
