@@ -35,7 +35,7 @@
         window.authorizations.add("key", new ApiKeyAuthorization("api_key", api_key, "query"));
        
       window.swaggerUi = new SwaggerUi({
-      url: "/api/swagger",
+      url: document.location.pathname.replace("index.html", "") + "swagger",
       dom_id: "swagger-ui-container",
       supportedSubmitMethods: ['get', 'post', 'put', 'delete'],
       apiKey : api_key,
@@ -69,6 +69,11 @@
 			});
 			//Set current url		
 			$("#api_source").val(swaggerApi.url);
+            
+             $(".expand").click(function(){
+                $(this).html( $(this).html() === "+" ? "-" : "+" );
+                $($(this).nextAll(".model")[0]).toggle("fast");
+              });
 		}
 		  },
 		  onFailure: function(data) {

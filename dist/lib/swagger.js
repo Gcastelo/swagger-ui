@@ -444,14 +444,15 @@
             propertiesStr.push(prop.toString());
           }
       }
-      description = this.description ? "<div class='modelDescritpion'>// "+this.description+"</div>" : "";
+      
       
       strong = '<span class="strong">';
       stronger = '<span class="stronger">';
       strongClose = '</span>';
-      classOpen = strong + this.name + ' {' + strongClose;
-      classClose = strong + '}' + strongClose;
-      returnVal = classOpen + '<div>' + propertiesStr.join(',</div><div>') + '</div>' + classClose;
+      classOpen = strong + this.name + ' { ' + strongClose;
+      classClose = strong + ' }' + strongClose;
+      expandCode = "<span class='expand'>+</span>&nbsp;";
+      returnVal = classOpen + "<div class='model'><div>" + propertiesStr.join(',</div><div>') + '</div></div>' + classClose ;
       if (!modelsToIgnore) {
         modelsToIgnore = [];
       }
@@ -460,11 +461,12 @@
       for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
         prop = _ref1[_j];
         if ((prop.refModel != null) && (modelsToIgnore.indexOf(prop.refModel)) === -1) {
-          returnVal = returnVal + ('<br/>' + prop.refModel.getMockSignature(modelsToIgnore));
+          returnVal = returnVal + '<div class="modelDependencies">' + ('<br/>' + prop.refModel.getMockSignature(modelsToIgnore)) + "</div>";
         }
       }
+      description = this.description ? "<div class='modelDescritpion'>// "+this.description+"</div>" : "";
       array = isListType ? '<span class="strong">Array of </span>' : "";
-      return description + array + returnVal;
+      return description + expandCode + array +  returnVal ;
     };
 
     SwaggerModel.prototype.createJSONSample = function(modelsToIgnore) {
@@ -1208,4 +1210,7 @@
 
   this.authorizations = new SwaggerAuthorizations();
   
+  
+  
 }).call(this);
+
