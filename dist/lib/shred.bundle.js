@@ -2554,11 +2554,14 @@ var Request = module.exports = function (xhr, params) {
     self.xhr = xhr;
     self.body = '';
     
+    var currentProtocol = location.protocol.substring(0,location.protocol.length-1);
+    params.port = currentProtocol === "https" ? 443 : 80;
+    
     var uri = params.host + ':' + params.port + (params.path || '/');
     
     xhr.open(
         params.method || 'GET',
-        (params.scheme || 'http') + '://' + uri,
+        (params.scheme || currentProtocol ) + '://' + uri,
         true
     );
     
