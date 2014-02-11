@@ -210,7 +210,7 @@
       pre = $('<pre class="json" />').append(code)
 
     response_body = pre
-    $(".request_url").html "<pre>" + data.request.url + "</pre>"
+    $(".request_url").html "<pre><a href='" + data.request.url + "' target='_blank'>"+data.request.url+"</pre>"
     $(".response_code", $(@el)).html "<pre>" + data.status + "</pre>"
     $(".response_body", $(@el)).html response_body
     $(".response_headers", $(@el)).html "<pre>" + JSON.stringify(data.getHeaders()) + "</pre>"
